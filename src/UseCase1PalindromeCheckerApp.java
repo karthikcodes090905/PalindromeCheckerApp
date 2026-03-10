@@ -1,17 +1,19 @@
 import java.util.Scanner;
-import java.util.Stack;
 
 public class UseCase1PalindromeCheckerApp {
 
-    // Node class for singly linked list
-    static class Node {
-        char data;
-        Node next;
+    // Recursive function to check palindrome
+    public static boolean isPalindrome(String str, int start, int end) {
 
-        Node(char data) {
-            this.data = data;
-            this.next = null;
+        if (start >= end) {
+            return true;
         }
+
+        if (str.charAt(start) != str.charAt(end)) {
+            return false;
+        }
+
+        return isPalindrome(str, start + 1, end - 1);
     }
 
     public static void main(String[] args) {
@@ -25,46 +27,9 @@ public class UseCase1PalindromeCheckerApp {
         System.out.print("Enter a string: ");
         String input = scanner.nextLine();
 
-        // Create linked list
-        Node head = null;
-        Node current = null;
+        boolean result = isPalindrome(input, 0, input.length() - 1);
 
-        for (int i = 0; i < input.length(); i++) {
-
-            Node newNode = new Node(input.charAt(i));
-
-            if (head == null) {
-                head = newNode;
-                current = newNode;
-            } else {
-                current.next = newNode;
-                current = newNode;
-            }
-        }
-
-        // Use stack to reverse characters
-        Stack<Character> stack = new Stack<>();
-
-        Node temp = head;
-
-        while (temp != null) {
-            stack.push(temp.data);
-            temp = temp.next;
-        }
-
-        boolean isPalindrome = true;
-
-        temp = head;
-
-        while (temp != null) {
-            if (temp.data != stack.pop()) {
-                isPalindrome = false;
-                break;
-            }
-            temp = temp.next;
-        }
-
-        if (isPalindrome) {
+        if (result) {
             System.out.println(input + " is a Palindrome");
         } else {
             System.out.println(input + " is NOT a Palindrome");
