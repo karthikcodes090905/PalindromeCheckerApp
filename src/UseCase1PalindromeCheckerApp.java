@@ -1,8 +1,18 @@
 import java.util.Scanner;
-import java.util.Deque;
-import java.util.ArrayDeque;
+import java.util.Stack;
 
 public class UseCase1PalindromeCheckerApp {
+
+    // Node class for singly linked list
+    static class Node {
+        char data;
+        Node next;
+
+        Node(char data) {
+            this.data = data;
+            this.next = null;
+        }
+    }
 
     public static void main(String[] args) {
 
@@ -15,25 +25,43 @@ public class UseCase1PalindromeCheckerApp {
         System.out.print("Enter a string: ");
         String input = scanner.nextLine();
 
-        Deque<Character> deque = new ArrayDeque<>();
+        // Create linked list
+        Node head = null;
+        Node current = null;
 
-        // Insert characters into deque
         for (int i = 0; i < input.length(); i++) {
-            deque.addLast(input.charAt(i));
+
+            Node newNode = new Node(input.charAt(i));
+
+            if (head == null) {
+                head = newNode;
+                current = newNode;
+            } else {
+                current.next = newNode;
+                current = newNode;
+            }
+        }
+
+        // Use stack to reverse characters
+        Stack<Character> stack = new Stack<>();
+
+        Node temp = head;
+
+        while (temp != null) {
+            stack.push(temp.data);
+            temp = temp.next;
         }
 
         boolean isPalindrome = true;
 
-        // Compare front and rear elements
-        while (deque.size() > 1) {
+        temp = head;
 
-            char front = deque.removeFirst();
-            char rear = deque.removeLast();
-
-            if (front != rear) {
+        while (temp != null) {
+            if (temp.data != stack.pop()) {
                 isPalindrome = false;
                 break;
             }
+            temp = temp.next;
         }
 
         if (isPalindrome) {
