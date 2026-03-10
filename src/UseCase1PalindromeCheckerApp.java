@@ -11,23 +11,30 @@ public class UseCase1PalindromeCheckerApp {
         Scanner scanner = new Scanner(System.in);
 
         System.out.print("Enter a string: ");
-        String original = scanner.nextLine();
+        String input = scanner.nextLine();
 
-        String reversed = "";
+        // Convert string to character array
+        char[] characters = input.toCharArray();
 
-        // reverse the string
-        for(int i = original.length() - 1; i >= 0; i--) {
-            reversed = reversed + original.charAt(i);
+        boolean isPalindrome = true;
+
+        int start = 0;
+        int end = characters.length - 1;
+
+        // Compare characters from both ends
+        while(start < end) {
+            if(characters[start] != characters[end]) {
+                isPalindrome = false;
+                break;
+            }
+            start++;
+            end--;
         }
 
-        // display reversed string
-        System.out.println("Reversed String: " + reversed);
-
-        // check palindrome
-        if(original.equals(reversed)) {
-            System.out.println(original + " is a Palindrome");
+        if(isPalindrome) {
+            System.out.println(input + " is a Palindrome");
         } else {
-            System.out.println(original + " is NOT a Palindrome");
+            System.out.println(input + " is NOT a Palindrome");
         }
 
         scanner.close();
