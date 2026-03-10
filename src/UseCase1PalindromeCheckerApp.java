@@ -1,7 +1,6 @@
 import java.util.Scanner;
-import java.util.Stack;
-import java.util.Queue;
-import java.util.LinkedList;
+import java.util.Deque;
+import java.util.ArrayDeque;
 
 public class UseCase1PalindromeCheckerApp {
 
@@ -16,34 +15,32 @@ public class UseCase1PalindromeCheckerApp {
         System.out.print("Enter a string: ");
         String input = scanner.nextLine();
 
-        // Stack for LIFO
-        Stack<Character> stack = new Stack<>();
+        Deque<Character> deque = new ArrayDeque<>();
 
-        // Queue for FIFO
-        Queue<Character> queue = new LinkedList<>();
-
-        // Insert characters into both structures
+        // Insert characters into deque
         for (int i = 0; i < input.length(); i++) {
-            stack.push(input.charAt(i));
-            queue.add(input.charAt(i));
+            deque.addLast(input.charAt(i));
         }
 
-        String lifoResult = "";
-        String fifoResult = "";
+        boolean isPalindrome = true;
 
-        // LIFO using Stack
-        while (!stack.isEmpty()) {
-            lifoResult = lifoResult + stack.pop();
+        // Compare front and rear elements
+        while (deque.size() > 1) {
+
+            char front = deque.removeFirst();
+            char rear = deque.removeLast();
+
+            if (front != rear) {
+                isPalindrome = false;
+                break;
+            }
         }
 
-        // FIFO using Queue
-        while (!queue.isEmpty()) {
-            fifoResult = fifoResult + queue.remove();
+        if (isPalindrome) {
+            System.out.println(input + " is a Palindrome");
+        } else {
+            System.out.println(input + " is NOT a Palindrome");
         }
-
-        System.out.println("Original String : " + input);
-        System.out.println("LIFO (Stack)    : " + lifoResult);
-        System.out.println("FIFO (Queue)    : " + fifoResult);
 
         scanner.close();
     }
