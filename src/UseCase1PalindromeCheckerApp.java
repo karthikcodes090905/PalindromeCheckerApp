@@ -1,5 +1,7 @@
 import java.util.Scanner;
 import java.util.Stack;
+import java.util.Queue;
+import java.util.LinkedList;
 
 public class UseCase1PalindromeCheckerApp {
 
@@ -14,26 +16,34 @@ public class UseCase1PalindromeCheckerApp {
         System.out.print("Enter a string: ");
         String input = scanner.nextLine();
 
+        // Stack for LIFO
         Stack<Character> stack = new Stack<>();
 
-        // Push characters to stack
-        for(int i = 0; i < input.length(); i++) {
+        // Queue for FIFO
+        Queue<Character> queue = new LinkedList<>();
+
+        // Insert characters into both structures
+        for (int i = 0; i < input.length(); i++) {
             stack.push(input.charAt(i));
+            queue.add(input.charAt(i));
         }
 
-        String reversed = "";
+        String lifoResult = "";
+        String fifoResult = "";
 
-        // Pop characters from stack
-        while(!stack.isEmpty()) {
-            reversed = reversed + stack.pop();
+        // LIFO using Stack
+        while (!stack.isEmpty()) {
+            lifoResult = lifoResult + stack.pop();
         }
 
-        // Compare original and reversed string
-        if(input.equals(reversed)) {
-            System.out.println(input + " is a Palindrome");
-        } else {
-            System.out.println(input + " is NOT a Palindrome");
+        // FIFO using Queue
+        while (!queue.isEmpty()) {
+            fifoResult = fifoResult + queue.remove();
         }
+
+        System.out.println("Original String : " + input);
+        System.out.println("LIFO (Stack)    : " + lifoResult);
+        System.out.println("FIFO (Queue)    : " + fifoResult);
 
         scanner.close();
     }
